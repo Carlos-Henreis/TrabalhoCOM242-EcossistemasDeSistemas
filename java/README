@@ -1,12 +1,22 @@
-Se estiver usando ubuntu, atualize para versão 16.10 ou mais recente,
-só assim sera possível baixar a versão 3.0+ direto do apt-get. 
+Instalação do GRPC:
 
-$sudo apt-get install protobuf-compiler
-$sudo apt-get install libprotobuf-java
+Para baixar o jar vamos utilizar o MAVEN
 
 $sudo apt-get install maven
 
-$sudo nano /etc/environment
+Após intalar o maven adicione o caminho de sua JDK em:
 
-adicionar no fim do arquivo
-JAVA_HOME="caminho do jdk"
+*/etc/environment
+
+Colocando a seguinte linha no fim do arquivo.
+
+*JAVA_HOME="caminho do jdk"
+
+Depois de salvar as alterações
+
+*$source /etc/environment
+
+Para baixar o Jar configure um arquivo pom.xml na pasta do projeto
+com as especificações de versão e nome. 
+
+pom.xml

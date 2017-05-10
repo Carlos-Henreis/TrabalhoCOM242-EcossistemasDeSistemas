@@ -1,0 +1,15 @@
+import public "Monster.proto";
+import public "Hero.proto";
+import public "Dice.proto";
+import public "Combat.proto";
+
+
+service clientRequest {
+	rpc request_Monster() return (Monster){}
+	rpc request_Hero(int32) returns (Hero){}	
+}
+
+service serverResponse {
+	rpc response_calculateCombat(Monster) returns (Combat){}
+	rpc response_rollDice(DiceType) returns (int32){}
+}

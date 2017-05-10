@@ -6,7 +6,6 @@ To generate python classes do
 protoc -I=./ --python_out=./ filename.proto
 
 
-
 Instalação do google GRPC: 
 
 1.)Primeiro atualize a versão de seu pip

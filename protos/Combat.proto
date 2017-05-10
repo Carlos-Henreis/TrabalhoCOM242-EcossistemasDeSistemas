@@ -1,0 +1,14 @@
+import public "Monster.proto";
+import public "Hero.proto";
+
+message Combat{
+	Monster enemy = 1;
+	Hero you = 2;
+	
+	enum winner {
+		player = 0;
+		creature = 1;
+	}
+
+	winner who_won = 3;
+}
