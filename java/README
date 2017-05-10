@@ -1,0 +1,12 @@
+Se estiver usando ubuntu, atualize para versão 16.10 ou mais recente,
+só assim sera possível baixar a versão 3.0+ direto do apt-get. 
+
+$sudo apt-get install protobuf-compiler
+$sudo apt-get install libprotobuf-java
+
+$sudo apt-get install maven
+
+$sudo nano /etc/environment
+
+adicionar no fim do arquivo
+JAVA_HOME="caminho do jdk"

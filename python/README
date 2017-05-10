@@ -1,0 +1,19 @@
+GRPC: http://www.grpc.io/docs/quickstart/python.html
+PROTOBUFFERS: https://developers.google.com/protocol-buffers/docs/overview
+
+To generate python classes do 
+
+protoc -I=./ --python_out=./ filename.proto
+
+
+
+Instalação do google GRPC: 
+
+1.)Primeiro atualize a versão de seu pip
+
+$ pip3 install --upgrade pip
+$ pip3 --version
+pip 9.0.1
+
+2.) Agora através do pip faça download do pacote
+$ sudo pip3 install grpcio

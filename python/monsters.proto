@@ -1,0 +1,13 @@
+syntax="proto3"
+
+message ResponseMonster{
+	int32 id = 1;
+	string name = 2;
+	int32 strength = 3;
+	int32 resistance = 4;
+	int32 health = 5;
+}
+
+message RequestMonster{
+	int32 id = 1; // ID do monstro requisitado
+}
