@@ -1,14 +1,40 @@
 from concurrent import futures
-import time
 
 import grpc
+import threading
 
 import application_pb2 as app
 import application_pb2_grpc as app_grpc
 from messages import Monster_pb2 as monster_pkg
 from random import randrange
 
-class pythonInterface (app_grpc.pythonInterfaceServicer):
+lock = threading.Lock()
+
+class pythonInterface (app_grpc.pythonInterfaceServicer, threading.Thread):
+
+	def __init__(self):
+		threading.Thread.__init__(self)
+		app_grpc.pythonInterfaceServicer.__init__(self)
+		self._stop_event = threading.Event()
+
+	def stop(self):
+		self._stop_event.set()
+
+	def run(self):
+		lock.acquire()
+
+		server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+		app_grpc.add_pythonInterfaceServicer_to_server(self,server)
+		server.add_insecure_port('[::]:50051')
+		server.start()
+
+		lock.release()
+
+		while not self._stop_event.is_set():
+			pass
+
+		server.stop(0)
+
 
 	def generateMonster(self, request, context):
 		ID = request.id
@@ -52,16 +78,15 @@ class pythonInterface (app_grpc.pythonInterfaceServicer):
 		return monster;
 
 
-def serve():
-	server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-	app_grpc.add_pythonInterfaceServicer_to_server(pythonInterface(),server)
-	server.add_insecure_port('[::]:50051')
-	server.start()
-	try:
-		while True:
-			time.sleep(3660)
-	except KeyboardInterrupt:
-		server.stop(0)
 
 if __name__ == '__main__':
-	serve()
+	pyInterface = pythonInterface()
+	pyInterface.start()
+	stop = ''
+	print(stop)	
+	while stop != 'q':
+
+		stop = input()
+	
+	pyInterface.stop()
+	pyInterface.join()
