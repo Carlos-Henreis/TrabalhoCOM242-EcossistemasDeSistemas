@@ -1,5 +1,7 @@
-import public "Monster.proto";
-import public "Hero.proto";
+syntax = "proto3";
+
+import "messages/Hero.proto";
+import "messages/Monster.proto";
 
 message Combat{
 	Monster enemy = 1;
@@ -8,7 +10,8 @@ message Combat{
 	enum winner {
 		player = 0;
 		creature = 1;
-	}
+	};
 
 	winner who_won = 3;
 }
+

@@ -1,4 +1,4 @@
-syntax = "proto3"
+syntax = "proto3";
 
 message Hero {
 	int32 id = 1;
@@ -6,4 +6,8 @@ message Hero {
 	int32 strength = 3;
 	int32 resistance = 4;
 	int32 health = 5;
+}
+
+message HeroID {
+	int32 id = 1;
 }

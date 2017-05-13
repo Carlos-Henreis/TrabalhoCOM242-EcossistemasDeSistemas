@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "messages/Hero.proto";
+import "messages/Combat.proto";
+import "messages/Dice.proto";
+import "messages/Monster.proto";
+
+service rubyInterface {
+	rpc getHero (HeroID) returns (Hero){}
+}
+
+service pythonInterface {
+	rpc generateMonster(MonsterId) returns (Monster){}
+}
+
+service javaInterface {
+	rpc calculateCombat (Monster) returns (Combat){}
+	rpc rollDice (DiceType) returns (Dice){}
+}
