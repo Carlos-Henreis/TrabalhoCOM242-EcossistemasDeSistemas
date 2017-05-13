@@ -13,17 +13,14 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from messages import Hero_pb2 as messages_dot_Hero__pb2
-from messages import Monster_pb2 as messages_dot_Monster__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages/Combat.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x15messages/Combat.proto\x1a\x13messages/Hero.proto\x1a\x16messages/Monster.proto\"\x84\x01\n\x06\x43ombat\x12\x17\n\x05\x65nemy\x18\x01 \x01(\x0b\x32\x08.Monster\x12\x12\n\x03you\x18\x02 \x01(\x0b\x32\x05.Hero\x12\x1f\n\x07who_won\x18\x03 \x01(\x0e\x32\x0e.Combat.winner\",\n\x06winner\x12\x08\n\x04none\x10\x00\x12\n\n\x06player\x10\x01\x12\x0c\n\x08\x63reature\x10\x02\x62\x06proto3')
-  ,
-  dependencies=[messages_dot_Hero__pb2.DESCRIPTOR,messages_dot_Monster__pb2.DESCRIPTOR,])
+  serialized_pb=_b('\n\x15messages/Combat.proto\"\x99\x01\n\x06\x43ombat\x12\x14\n\x0c\x61tk_strength\x18\x01 \x01(\x05\x12\x16\n\x0e\x64\x65\x66_resistance\x18\x02 \x01(\x05\x12\x12\n\ndef_health\x18\x03 \x01(\x05\x12\x1f\n\x07who_won\x18\x04 \x01(\x0e\x32\x0e.Combat.winner\",\n\x06winner\x12\x08\n\x04none\x10\x00\x12\n\n\x06player\x10\x01\x12\x0c\n\x08\x63reature\x10\x02\x62\x06proto3')
+)
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
@@ -49,8 +46,8 @@ _COMBAT_WINNER = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=159,
-  serialized_end=203,
+  serialized_start=135,
+  serialized_end=179,
 )
 _sym_db.RegisterEnumDescriptor(_COMBAT_WINNER)
 
@@ -63,22 +60,29 @@ _COMBAT = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='enemy', full_name='Combat.enemy', index=0,
-      number=1, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='atk_strength', full_name='Combat.atk_strength', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='you', full_name='Combat.you', index=1,
-      number=2, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='def_resistance', full_name='Combat.def_resistance', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='who_won', full_name='Combat.who_won', index=2,
-      number=3, type=14, cpp_type=8, label=1,
+      name='def_health', full_name='Combat.def_health', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='who_won', full_name='Combat.who_won', index=3,
+      number=4, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -96,12 +100,10 @@ _COMBAT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=71,
-  serialized_end=203,
+  serialized_start=26,
+  serialized_end=179,
 )
 
-_COMBAT.fields_by_name['enemy'].message_type = messages_dot_Monster__pb2._MONSTER
-_COMBAT.fields_by_name['you'].message_type = messages_dot_Hero__pb2._HERO
 _COMBAT.fields_by_name['who_won'].enum_type = _COMBAT_WINNER
 _COMBAT_WINNER.containing_type = _COMBAT
 DESCRIPTOR.message_types_by_name['Combat'] = _COMBAT

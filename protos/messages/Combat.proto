@@ -1,18 +1,19 @@
 syntax = "proto3";
 
-import "messages/Hero.proto";
-import "messages/Monster.proto";
-
 message Combat{
-	Monster enemy = 1;
-	Hero you = 2;
-	
+	int32 atk_strength = 1;
+	int32 def_resistance = 2;
+	int32 def_health = 3;
+
 	enum winner {
 		none = 0;
 		player = 1;
 		creature = 2;
 	};
 
-	winner who_won = 3;
+	winner who_won = 4;
 }
 
+
+
+    
