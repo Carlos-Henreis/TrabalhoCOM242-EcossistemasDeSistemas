@@ -8,8 +8,9 @@ message Combat{
 	Hero you = 2;
 	
 	enum winner {
-		player = 0;
-		creature = 1;
+		none = 0;
+		player = 1;
+		creature = 2;
 	};
 
 	winner who_won = 3;

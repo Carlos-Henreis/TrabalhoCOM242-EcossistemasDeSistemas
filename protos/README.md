@@ -3,9 +3,11 @@
 ========================================================================================
 
 Python:
-Rode o comando para gerar as mensagens e as interfaces gRPC:
+Rode os comandos para gerar as mensagens e as interfaces gRPC:
 
-$ python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. application.proto
+$ python3 -m grpc_tools.protoc -I./ --python_out=./../python --grpc_python_out=./../python application.proto
+
+$ python3 -m grpc_tools.protoc -I./ --python_out=./../python/ --grpc_python_out=./../python/ messages/Hero.proto messages/Dice.proto messages/Monster.proto messages/Combat.proto
 
 Copie os arquivos para a pasta do projeto.
 

@@ -23,7 +23,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='application.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x11\x61pplication.proto\x1a\x13messages/Hero.proto\x1a\x15messages/Combat.proto\x1a\x13messages/Dice.proto\x1a\x16messages/Monster.proto2,\n\rrubyInterface\x12\x1b\n\x07getHero\x12\x07.HeroID\x1a\x05.Hero\"\x00\x32<\n\x0fpythonInterface\x12)\n\x0fgenerateMonster\x12\n.MonsterId\x1a\x08.Monster\"\x00\x32W\n\rjavaInterface\x12&\n\x0f\x63\x61lculateCombat\x12\x08.Monster\x1a\x07.Combat\"\x00\x12\x1e\n\x08rollDice\x12\t.DiceType\x1a\x05.Dice\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x11\x61pplication.proto\x1a\x13messages/Hero.proto\x1a\x15messages/Combat.proto\x1a\x13messages/Dice.proto\x1a\x16messages/Monster.proto2,\n\rrubyInterface\x12\x1b\n\x07getHero\x12\x07.HeroID\x1a\x05.Hero\"\x00\x32<\n\x0fpythonInterface\x12)\n\x0fgenerateMonster\x12\n.MonsterId\x1a\x08.Monster\"\x00\x32V\n\rjavaInterface\x12%\n\x0f\x63\x61lculateCombat\x12\x07.Combat\x1a\x07.Combat\"\x00\x12\x1e\n\x08rollDice\x12\t.DiceType\x1a\x05.Dice\"\x00\x62\x06proto3')
   ,
   dependencies=[messages_dot_Hero__pb2.DESCRIPTOR,messages_dot_Combat__pb2.DESCRIPTOR,messages_dot_Dice__pb2.DESCRIPTOR,messages_dot_Monster__pb2.DESCRIPTOR,])
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -124,7 +124,7 @@ try:
       """
       self.calculateCombat = channel.unary_unary(
           '/javaInterface/calculateCombat',
-          request_serializer=messages_dot_Monster__pb2.Monster.SerializeToString,
+          request_serializer=messages_dot_Combat__pb2.Combat.SerializeToString,
           response_deserializer=messages_dot_Combat__pb2.Combat.FromString,
           )
       self.rollDice = channel.unary_unary(
@@ -151,7 +151,7 @@ try:
     rpc_method_handlers = {
         'calculateCombat': grpc.unary_unary_rpc_method_handler(
             servicer.calculateCombat,
-            request_deserializer=messages_dot_Monster__pb2.Monster.FromString,
+            request_deserializer=messages_dot_Combat__pb2.Combat.FromString,
             response_serializer=messages_dot_Combat__pb2.Combat.SerializeToString,
         ),
         'rollDice': grpc.unary_unary_rpc_method_handler(
@@ -316,7 +316,7 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_deserializers = {
-      ('javaInterface', 'calculateCombat'): messages_dot_Monster__pb2.Monster.FromString,
+      ('javaInterface', 'calculateCombat'): messages_dot_Combat__pb2.Combat.FromString,
       ('javaInterface', 'rollDice'): messages_dot_Dice__pb2.DiceType.FromString,
     }
     response_serializers = {
@@ -338,7 +338,7 @@ try:
     file not marked beta) for all further purposes. This function was
     generated only to ease transition from grpcio<0.15.0 to grpcio>=0.15.0"""
     request_serializers = {
-      ('javaInterface', 'calculateCombat'): messages_dot_Monster__pb2.Monster.SerializeToString,
+      ('javaInterface', 'calculateCombat'): messages_dot_Combat__pb2.Combat.SerializeToString,
       ('javaInterface', 'rollDice'): messages_dot_Dice__pb2.DiceType.SerializeToString,
     }
     response_deserializers = {

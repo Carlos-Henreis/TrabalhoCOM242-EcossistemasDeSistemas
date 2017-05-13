@@ -14,6 +14,6 @@ service pythonInterface {
 }
 
 service javaInterface {
-	rpc calculateCombat (Monster) returns (Combat){}
+	rpc calculateCombat (Combat) returns (Combat){}
 	rpc rollDice (DiceType) returns (Dice){}
 }

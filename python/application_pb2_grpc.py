@@ -89,7 +89,7 @@ class javaInterfaceStub(object):
     """
     self.calculateCombat = channel.unary_unary(
         '/javaInterface/calculateCombat',
-        request_serializer=messages_dot_Monster__pb2.Monster.SerializeToString,
+        request_serializer=messages_dot_Combat__pb2.Combat.SerializeToString,
         response_deserializer=messages_dot_Combat__pb2.Combat.FromString,
         )
     self.rollDice = channel.unary_unary(
@@ -116,7 +116,7 @@ def add_javaInterfaceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'calculateCombat': grpc.unary_unary_rpc_method_handler(
           servicer.calculateCombat,
-          request_deserializer=messages_dot_Monster__pb2.Monster.FromString,
+          request_deserializer=messages_dot_Combat__pb2.Combat.FromString,
           response_serializer=messages_dot_Combat__pb2.Combat.SerializeToString,
       ),
       'rollDice': grpc.unary_unary_rpc_method_handler(
