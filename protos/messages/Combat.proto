@@ -6,9 +6,9 @@ message Combat{
 	int32 def_health = 3;
 
 	enum winner {
-		none = 0;
-		player = 1;
-		creature = 2;
+		None = 0;
+		Player = 1;
+		Creature = 2;
 	};
 
 	winner who_won = 4;
