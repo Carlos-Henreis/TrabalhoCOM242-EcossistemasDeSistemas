@@ -2,15 +2,19 @@ from concurrent import futures
 
 import grpc
 import threading
+import time
 
 import application_pb2 as app
 import application_pb2_grpc as app_grpc
+
 from messages import Monster_pb2 as monster_pkg
+from messages import Hero_pb2 as hero_pkg
+
 from random import randrange
 
-lock = threading.Lock()
 
-class pythonInterface (app_grpc.pythonInterfaceServicer, threading.Thread):
+
+class PythonApplication (app_grpc.pythonInterfaceServicer, threading.Thread):
 
 	def __init__(self):
 		threading.Thread.__init__(self)
@@ -18,23 +22,14 @@ class pythonInterface (app_grpc.pythonInterfaceServicer, threading.Thread):
 		self._stop_event = threading.Event()
 
 	def stop(self):
+		self.server.stop(0)
 		self._stop_event.set()
 
 	def run(self):
-		lock.acquire()
-
-		server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-		app_grpc.add_pythonInterfaceServicer_to_server(self,server)
-		server.add_insecure_port('[::]:50051')
-		server.start()
-
-		lock.release()
-
-		while not self._stop_event.is_set():
-			pass
-
-		server.stop(0)
-
+		self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+		app_grpc.add_pythonInterfaceServicer_to_server(self,self.server)
+		self.server.add_insecure_port('[::]:50051')
+		self.server.start()
 
 	def generateMonster(self, request, context):
 		ID = request.id
@@ -77,16 +72,56 @@ class pythonInterface (app_grpc.pythonInterfaceServicer, threading.Thread):
 
 		return monster;
 
+lock = threading.Lock()
+java_stub = None
+ruby_stub = None
+
+def print_menu():
+	print('PyApp Menu:')
+	print('rb-hero \t Selecionar um hero')
+	print('java-dice \t Jogar um dado')
+	print('java-combat \t Realizar um combate')
+
+def switch_op(op):
+	if(op == 'rb-hero'):
+		hero_id = hero_pkg.HeroID()
+		hero_id.id = int(input('Digite o id do héroi:'))
+		
+		hero = ruby_stub.getHero(hero_id)
+		print(hero.name)
 
 
 if __name__ == '__main__':
-	pyInterface = pythonInterface()
-	pyInterface.start()
-	stop = ''
-	print(stop)	
-	while stop != 'q':
+	pyApp = PythonApplication()
 
-		stop = input()
+	lock.acquire()
+	pyApp.start()
+	lock.release()
+
+	port = ':50052'
+
+	"""Configurando a porta para requisições na aplicação JAVA""
+
+	java_ip = input('Digite o IP da máquina JAVA: ')
+	java_ip += port
+	channel = grpc.insecure_channel(java_ip)
+	java_stub = app_grpc.javaInterfaceStub(channel)"""
+
+	"""Configurando a porta para requisições na aplicação RUBY"""
+
+	ruby_ip = input('Digite o IP da máquina RUBY: ')
+	ruby_ip += port
+	channel = grpc.insecure_channel(ruby_ip)
+	ruby_stub = app_grpc.rubyInterfaceStub(channel)
+
+
+	op = ''
+	while True:
+		print_menu()
+		op = input()
+		if(op == 'q'):
+			break
+		switch_op(op)
 	
-	pyInterface.stop()
-	pyInterface.join()
+	pyApp.stop()
+	pyApp.join()

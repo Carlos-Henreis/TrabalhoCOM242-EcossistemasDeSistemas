@@ -9,6 +9,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :type, :message, 2, "DiceType"
   end
   add_message "DiceType" do
+    optional :tipoDado, :enum, 1, "DiceType.Type"
   end
   add_enum "DiceType.Type" do
     value :D4, 0

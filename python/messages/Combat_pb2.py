@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages/Combat.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x15messages/Combat.proto\"\x99\x01\n\x06\x43ombat\x12\x14\n\x0c\x61tk_strength\x18\x01 \x01(\x05\x12\x16\n\x0e\x64\x65\x66_resistance\x18\x02 \x01(\x05\x12\x12\n\ndef_health\x18\x03 \x01(\x05\x12\x1f\n\x07who_won\x18\x04 \x01(\x0e\x32\x0e.Combat.winner\",\n\x06winner\x12\x08\n\x04none\x10\x00\x12\n\n\x06player\x10\x01\x12\x0c\n\x08\x63reature\x10\x02\x62\x06proto3')
+  serialized_pb=_b('\n\x15messages/Combat.proto\"\xd3\x01\n\x06\x43ombat\x12\x14\n\x0c\x61tk_strength\x18\x01 \x01(\x05\x12\x16\n\x0e\x61tk_resistance\x18\x02 \x01(\x05\x12\x12\n\natk_health\x18\x03 \x01(\x05\x12\x14\n\x0c\x64\x65\x66_strength\x18\x04 \x01(\x05\x12\x16\n\x0e\x64\x65\x66_resistance\x18\x05 \x01(\x05\x12\x12\n\ndef_health\x18\x06 \x01(\x05\x12\x1f\n\x07who_won\x18\x07 \x01(\x0e\x32\x0e.Combat.winner\"$\n\x06winner\x12\x0c\n\x08\x44\x65\x66\x65nder\x10\x00\x12\x0c\n\x08\x41ttacker\x10\x01\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -32,22 +32,18 @@ _COMBAT_WINNER = _descriptor.EnumDescriptor(
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='none', index=0, number=0,
+      name='Defender', index=0, number=0,
       options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='player', index=1, number=1,
-      options=None,
-      type=None),
-    _descriptor.EnumValueDescriptor(
-      name='creature', index=2, number=2,
+      name='Attacker', index=1, number=1,
       options=None,
       type=None),
   ],
   containing_type=None,
   options=None,
-  serialized_start=135,
-  serialized_end=179,
+  serialized_start=201,
+  serialized_end=237,
 )
 _sym_db.RegisterEnumDescriptor(_COMBAT_WINNER)
 
@@ -67,22 +63,43 @@ _COMBAT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='def_resistance', full_name='Combat.def_resistance', index=1,
+      name='atk_resistance', full_name='Combat.atk_resistance', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='def_health', full_name='Combat.def_health', index=2,
+      name='atk_health', full_name='Combat.atk_health', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='who_won', full_name='Combat.who_won', index=3,
-      number=4, type=14, cpp_type=8, label=1,
+      name='def_strength', full_name='Combat.def_strength', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='def_resistance', full_name='Combat.def_resistance', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='def_health', full_name='Combat.def_health', index=5,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='who_won', full_name='Combat.who_won', index=6,
+      number=7, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -101,7 +118,7 @@ _COMBAT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=26,
-  serialized_end=179,
+  serialized_end=237,
 )
 
 _COMBAT.fields_by_name['who_won'].enum_type = _COMBAT_WINNER
@@ -116,14 +133,4 @@ Combat = _reflection.GeneratedProtocolMessageType('Combat', (_message.Message,),
 _sym_db.RegisterMessage(Combat)
 
 
-try:
-  # THESE ELEMENTS WILL BE DEPRECATED.
-  # Please use the generated *_pb2_grpc.py files instead.
-  import grpc
-  from grpc.beta import implementations as beta_implementations
-  from grpc.beta import interfaces as beta_interfaces
-  from grpc.framework.common import cardinality
-  from grpc.framework.interfaces.face import utilities as face_utilities
-except ImportError:
-  pass
 # @@protoc_insertion_point(module_scope)

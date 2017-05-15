@@ -2,18 +2,17 @@ syntax = "proto3";
 
 message Combat{
 	int32 atk_strength = 1;
-	int32 def_resistance = 2;
-	int32 def_health = 3;
+	int32 atk_resistance = 2;
+	int32 atk_health = 3;
+
+	int32 def_strength = 4;
+	int32 def_resistance = 5;
+	int32 def_health = 6;
 
 	enum winner {
-		None = 0;
-		Player = 1;
-		Creature = 2;
+		Defender = 0;
+		Attacker = 1;
 	};
 
-	winner who_won = 4;
+	winner who_won = 7;
 }
-
-
-
-    

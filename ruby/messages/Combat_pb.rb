@@ -6,14 +6,16 @@ require 'google/protobuf'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "Combat" do
     optional :atk_strength, :int32, 1
-    optional :def_resistance, :int32, 2
-    optional :def_health, :int32, 3
-    optional :who_won, :enum, 4, "Combat.winner"
+    optional :atk_resistance, :int32, 2
+    optional :atk_health, :int32, 3
+    optional :def_strength, :int32, 4
+    optional :def_resistance, :int32, 5
+    optional :def_health, :int32, 6
+    optional :who_won, :enum, 7, "Combat.winner"
   end
   add_enum "Combat.winner" do
-    value :None, 0
-    value :Player, 1
-    value :Creature, 2
+    value :Defender, 0
+    value :Attacker, 1
   end
 end
 

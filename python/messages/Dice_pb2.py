@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages/Dice.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x13messages/Dice.proto\"5\n\x04\x44ice\x12\x14\n\x0crolledNumber\x18\x01 \x01(\x05\x12\x17\n\x04type\x18\x02 \x01(\x0b\x32\t.DiceType\"O\n\x08\x44iceType\"C\n\x04Type\x12\x06\n\x02\x44\x34\x10\x00\x12\x06\n\x02\x44\x36\x10\x01\x12\x06\n\x02\x44\x38\x10\x02\x12\x07\n\x03\x44\x31\x30\x10\x03\x12\x07\n\x03\x44\x31\x32\x10\x04\x12\x07\n\x03\x44\x32\x30\x10\x05\x12\x08\n\x04\x44\x31\x30\x30\x10\x06\x62\x06proto3')
+  serialized_pb=_b('\n\x13messages/Dice.proto\"5\n\x04\x44ice\x12\x14\n\x0crolledNumber\x18\x01 \x01(\x05\x12\x17\n\x04type\x18\x02 \x01(\x0b\x32\t.DiceType\"q\n\x08\x44iceType\x12 \n\x08tipoDado\x18\x01 \x01(\x0e\x32\x0e.DiceType.Type\"C\n\x04Type\x12\x06\n\x02\x44\x34\x10\x00\x12\x06\n\x02\x44\x36\x10\x01\x12\x06\n\x02\x44\x38\x10\x02\x12\x07\n\x03\x44\x31\x30\x10\x03\x12\x07\n\x03\x44\x31\x32\x10\x04\x12\x07\n\x03\x44\x32\x30\x10\x05\x12\x08\n\x04\x44\x31\x30\x30\x10\x06\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -62,8 +62,8 @@ _DICETYPE_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=90,
-  serialized_end=157,
+  serialized_start=124,
+  serialized_end=191,
 )
 _sym_db.RegisterEnumDescriptor(_DICETYPE_TYPE)
 
@@ -113,6 +113,13 @@ _DICETYPE = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='tipoDado', full_name='DiceType.tipoDado', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -127,10 +134,11 @@ _DICETYPE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=78,
-  serialized_end=157,
+  serialized_end=191,
 )
 
 _DICE.fields_by_name['type'].message_type = _DICETYPE
+_DICETYPE.fields_by_name['tipoDado'].enum_type = _DICETYPE_TYPE
 _DICETYPE_TYPE.containing_type = _DICETYPE
 DESCRIPTOR.message_types_by_name['Dice'] = _DICE
 DESCRIPTOR.message_types_by_name['DiceType'] = _DICETYPE
@@ -150,14 +158,4 @@ DiceType = _reflection.GeneratedProtocolMessageType('DiceType', (_message.Messag
 _sym_db.RegisterMessage(DiceType)
 
 
-try:
-  # THESE ELEMENTS WILL BE DEPRECATED.
-  # Please use the generated *_pb2_grpc.py files instead.
-  import grpc
-  from grpc.beta import implementations as beta_implementations
-  from grpc.beta import interfaces as beta_interfaces
-  from grpc.framework.common import cardinality
-  from grpc.framework.interfaces.face import utilities as face_utilities
-except ImportError:
-  pass
 # @@protoc_insertion_point(module_scope)

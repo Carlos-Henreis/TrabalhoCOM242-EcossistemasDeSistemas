@@ -5,7 +5,7 @@ message Dice {
   DiceType type = 2;
 }
 
-message DiceType { 
+message DiceType {     
 	enum Type {
 	  D4 = 0;
 	  D6 = 1;
@@ -15,4 +15,6 @@ message DiceType {
 	  D20 = 5;
 	  D100 = 6;
 	}
+
+    Type tipoDado = 1;
 }
