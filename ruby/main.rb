@@ -45,6 +45,7 @@ class RubyServer < RubyInterface::Service
 			return $hero_list.select{|h| h.id == heroId_req.id}.first
 	end
 end
+
 $monster_list = []
 $javaStub = nil
 $pythonStub = nil
@@ -104,11 +105,11 @@ def switchOP(op)
 
 	elsif op == 'sh'
 		$hero_list.each { |m| puts "#######"
-														 puts "id: #{m.id}"
-													   puts "name: #{m.name}"
-													 	 puts "str: #{m.strength}"
-													   puts "res: #{m.resistance}"
-													   puts "health: #{m.health}" }
+													puts "id: #{m.id}"
+													puts "name: #{m.name}"
+													puts "str: #{m.strength}"
+													puts "res: #{m.resistance}"
+													puts "health: #{m.health}" }
 		puts "#######"
 
 	elsif op == 'q'
@@ -117,11 +118,9 @@ def switchOP(op)
 end
 
 def main
-
-
 	th_server = Thread.new{
 		server = GRPC::RpcServer.new
-		server.add_http2_port('0.0.0.0:50052',:this_port_is_insecure)
+		server.add_http2_port('0.0.0.0:50051',:this_port_is_insecure)
 		server.handle(RubyServer)
 		server.run_till_terminated
 	}
@@ -142,7 +141,6 @@ def main
 		if switchOP(gets.chomp) == :die
 			break
 		end
-
 	end
 
 	# Finalizando a execução da thread

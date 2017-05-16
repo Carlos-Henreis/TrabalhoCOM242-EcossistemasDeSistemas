@@ -69,9 +69,9 @@ class PythonApplication (app_grpc.pythonInterfaceServicer, threading.Thread):
 		self._stop_event.set()
 
 	def run(self):
-		self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 		app_grpc.add_pythonInterfaceServicer_to_server(self,self.server)
 		self.server.add_insecure_port('[::]:50051')
+		self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 		self.server.start()
 
 	def generateMonster(self, request, context):
@@ -81,8 +81,6 @@ class PythonApplication (app_grpc.pythonInterfaceServicer, threading.Thread):
 
 		monster = monster_list[ID]
 		return monster;
-
-
 
 lock = threading.Lock()
 java_stub = None
@@ -173,7 +171,7 @@ if __name__ == '__main__':
 	pyApp.start()
 	lock.release()
 
-	port = ':50052'
+	port = ':50051'
 
 	"""Configurando a porta para requisições na aplicação JAVA"""
 
