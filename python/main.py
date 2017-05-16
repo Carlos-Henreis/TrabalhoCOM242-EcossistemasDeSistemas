@@ -91,21 +91,21 @@ ruby_stub = None
 hero_list = []
 
 def print_menu():
-	print('Numero de heros = ['+str(len(hero_list))+']')
+	print('Numero de heroes = ['+str(len(hero_list))+']')
 	print('Numero de monsters = ['+str(len(monster_list))+']')
 	print('PyApp Menu:')
 	print('rb-hero \t\t\t Selecionar um hero')
 	print('java-dice \t\t\t Jogar um dado')
 	print('java-combat \t\t\t Realizar um combate')
 	print('sm \t\t\t\t listar monsters')
-	print('sh \t\t\t\t listar heros')
+	print('sh \t\t\t\t listar heroes')
 	print('q \t\t\t\t Sair')
 
 def switch_op(op):
 	if(op == 'rb-hero'):
 		hero_id = hero_pkg.HeroID()
 		hero_id.id = int(input('Digite o id do héroi:'))
-		
+
 		hero = ruby_stub.getHero(hero_id)
 		hero_list.append(hero)
 		hero_list.sort(key=lambda hero: hero.id)
@@ -120,7 +120,7 @@ def switch_op(op):
 	if(op == 'java-combat'):
 		hero = input('Entre o id do hero: ')
 		for h in hero_list:
-			if(h.id == hero)
+			if(h.id == hero):
 				hero = h
 				break
 
@@ -153,7 +153,7 @@ def switch_op(op):
 			print('res: ' + str(monster.resistance))
 			print('health: '+ str(monster.health))
 		print('#######')
-	
+
 	if(op == 'sh'):
 		for hero in hero_list:
 			print('#######')
@@ -197,6 +197,6 @@ if __name__ == '__main__':
 		if(op == 'q'):
 			break
 		switch_op(op)
-	
+
 	pyApp.stop()
 	pyApp.join()
