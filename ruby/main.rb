@@ -72,7 +72,7 @@ def switchOP(op)
 		print "Tipo do dado (D4,D6,D8,D10,D12,D20,D100):"
 		diceType = DiceType.new(tipoDado: gets.chomp.to_sym)
 		rolledDice = $javaStub.roll_dice(diceType)
-		puts "O dado #{rolledDice.tipoDado} rolou #{rolledDice.rolledNumber}"
+		puts "O dado rolou #{rolledDice.rolledNumber}"
 
 	elsif op == 'java-combat'
 		print "Entre o id do hero: "
