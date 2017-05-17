@@ -63,15 +63,16 @@ class PythonApplication (app_grpc.pythonInterfaceServicer, threading.Thread):
 		threading.Thread.__init__(self)
 		app_grpc.pythonInterfaceServicer.__init__(self)
 		self._stop_event = threading.Event()
+		self.server = None
 
 	def stop(self):
 		self.server.stop(0)
 		self._stop_event.set()
 
 	def run(self):
-		app_grpc.add_pythonInterfaceServicer_to_server(self,self.server)
-		self.server.add_insecure_port('[::]:50051')
 		self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+		self.server.add_insecure_port('[::]:50051')
+		app_grpc.add_pythonInterfaceServicer_to_server(self,self.server)
 		self.server.start()
 
 	def generateMonster(self, request, context):
