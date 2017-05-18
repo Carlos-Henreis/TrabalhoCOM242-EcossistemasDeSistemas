@@ -3,21 +3,20 @@
 
 require 'google/protobuf'
 
+require_relative 'Hero_pb'
+require_relative 'Monster_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_message "Combat" do
-    optional :atk_strength, :int32, 1
-    optional :atk_resistance, :int32, 2
-    optional :atk_health, :int32, 3
-    optional :def_strength, :int32, 4
-    optional :def_resistance, :int32, 5
-    optional :def_health, :int32, 6
-    optional :who_won, :enum, 7, "Combat.winner"
+    optional :aHero, :message, 1, "Hero"
+    optional :aMonster, :message, 2, "Monster"
+    optional :who_attacks, :enum, 3, "Combat.attacker"
+    optional :deadDefender, :bool, 4
   end
-  add_enum "Combat.winner" do
-    value :Defender, 0
-    value :Attacker, 1
+  add_enum "Combat.attacker" do
+    value :hero, 0
+    value :monster, 1
   end
 end
 
 Combat = Google::Protobuf::DescriptorPool.generated_pool.lookup("Combat").msgclass
-Combat::Winner = Google::Protobuf::DescriptorPool.generated_pool.lookup("Combat.winner").enummodule
+Combat::Attacker = Google::Protobuf::DescriptorPool.generated_pool.lookup("Combat.attacker").enummodule

@@ -142,6 +142,7 @@ public class Switcher {
                         System.out.println("O monstro não foi derrotado, ele irá atacar!");
                         cBuilder = Combat.newBuilder(c).setWhoAttacks(Combat.attacker.monster);
                         c = cBuilder.build();
+                        JavaApp.ThisCalculateCombat(c);
                     } else {
                         System.out.println("Monstro " + def.getName() + " derrotado");
                     }

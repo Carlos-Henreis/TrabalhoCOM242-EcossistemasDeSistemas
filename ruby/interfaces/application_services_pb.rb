@@ -2,7 +2,7 @@
 # Source: application.proto for package ''
 
 require 'grpc'
-require_relative 'application_pb'
+require_relative '../messages/application_pb'
 
 module RubyInterface
   class Service
@@ -13,7 +13,9 @@ module RubyInterface
     self.unmarshal_class_method = :decode
     self.service_name = 'rubyInterface'
 
-    rpc :getHero, HeroID, Hero
+    rpc :getHero, HeroID, Heroes
+    rpc :setHero, Hero, Heroes
+    rpc :addHero, Hero, Heroes
   end
 
   Stub = Service.rpc_stub_class
@@ -27,7 +29,7 @@ module PythonInterface
     self.unmarshal_class_method = :decode
     self.service_name = 'pythonInterface'
 
-    rpc :generateMonster, MonsterId, Monster
+    rpc :generateMonster, MonsterQt, Monsters
   end
 
   Stub = Service.rpc_stub_class

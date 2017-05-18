@@ -3,9 +3,9 @@
 
 require 'google/protobuf'
 
-require_relative 'Hero_pb'
-require_relative 'Combat_pb'
-require_relative 'Dice_pb'
-require_relative 'Monster_pb'
+require_relative 'messages/Hero_pb'
+require_relative 'messages/Combat_pb'
+require_relative 'messages/Dice_pb'
+require_relative 'messages/Monster_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
 end

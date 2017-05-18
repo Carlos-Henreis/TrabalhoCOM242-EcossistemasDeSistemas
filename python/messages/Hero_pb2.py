@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages/Hero.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x13messages/Hero.proto\"V\n\x04Hero\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08strength\x18\x03 \x01(\x05\x12\x12\n\nresistance\x18\x04 \x01(\x05\x12\x0e\n\x06health\x18\x05 \x01(\x05\"\x14\n\x06HeroID\x12\n\n\x02id\x18\x01 \x01(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\x13messages/Hero.proto\"i\n\x04Hero\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08strength\x18\x03 \x01(\x05\x12\x12\n\nresistance\x18\x04 \x01(\x05\x12\x11\n\tmaxHealth\x18\x05 \x01(\x05\x12\x0e\n\x06health\x18\x06 \x01(\x05\"\x14\n\x06HeroID\x12\n\n\x02id\x18\x01 \x01(\x05\"\x1d\n\x06Heroes\x12\x13\n\x04hero\x18\x01 \x03(\x0b\x32\x05.Herob\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -62,8 +62,15 @@ _HERO = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='health', full_name='Hero.health', index=4,
+      name='maxHealth', full_name='Hero.maxHealth', index=4,
       number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='health', full_name='Hero.health', index=5,
+      number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -81,7 +88,7 @@ _HERO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=23,
-  serialized_end=109,
+  serialized_end=128,
 )
 
 
@@ -111,12 +118,45 @@ _HEROID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=111,
-  serialized_end=131,
+  serialized_start=130,
+  serialized_end=150,
 )
 
+
+_HEROES = _descriptor.Descriptor(
+  name='Heroes',
+  full_name='Heroes',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='hero', full_name='Heroes.hero', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=152,
+  serialized_end=181,
+)
+
+_HEROES.fields_by_name['hero'].message_type = _HERO
 DESCRIPTOR.message_types_by_name['Hero'] = _HERO
 DESCRIPTOR.message_types_by_name['HeroID'] = _HEROID
+DESCRIPTOR.message_types_by_name['Heroes'] = _HEROES
 
 Hero = _reflection.GeneratedProtocolMessageType('Hero', (_message.Message,), dict(
   DESCRIPTOR = _HERO,
@@ -131,6 +171,13 @@ HeroID = _reflection.GeneratedProtocolMessageType('HeroID', (_message.Message,),
   # @@protoc_insertion_point(class_scope:HeroID)
   ))
 _sym_db.RegisterMessage(HeroID)
+
+Heroes = _reflection.GeneratedProtocolMessageType('Heroes', (_message.Message,), dict(
+  DESCRIPTOR = _HEROES,
+  __module__ = 'messages.Hero_pb2'
+  # @@protoc_insertion_point(class_scope:Heroes)
+  ))
+_sym_db.RegisterMessage(Heroes)
 
 
 # @@protoc_insertion_point(module_scope)

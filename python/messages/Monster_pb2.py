@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages/Monster.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\x16messages/Monster.proto\"Y\n\x07Monster\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08strength\x18\x03 \x01(\x05\x12\x12\n\nresistance\x18\x04 \x01(\x05\x12\x0e\n\x06health\x18\x05 \x01(\x05\"\x17\n\tMonsterId\x12\n\n\x02id\x18\x01 \x01(\x05\x62\x06proto3')
+  serialized_pb=_b('\n\x16messages/Monster.proto\"Y\n\x07Monster\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08strength\x18\x03 \x01(\x05\x12\x12\n\nresistance\x18\x04 \x01(\x05\x12\x0e\n\x06health\x18\x05 \x01(\x05\"\x17\n\tMonsterQt\x12\n\n\x02qt\x18\x01 \x01(\x05\"%\n\x08Monsters\x12\x19\n\x07monster\x18\x01 \x03(\x0b\x32\x08.Monsterb\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -85,15 +85,15 @@ _MONSTER = _descriptor.Descriptor(
 )
 
 
-_MONSTERID = _descriptor.Descriptor(
-  name='MonsterId',
-  full_name='MonsterId',
+_MONSTERQT = _descriptor.Descriptor(
+  name='MonsterQt',
+  full_name='MonsterQt',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='MonsterId.id', index=0,
+      name='qt', full_name='MonsterQt.qt', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -115,8 +115,41 @@ _MONSTERID = _descriptor.Descriptor(
   serialized_end=140,
 )
 
+
+_MONSTERS = _descriptor.Descriptor(
+  name='Monsters',
+  full_name='Monsters',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='monster', full_name='Monsters.monster', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=142,
+  serialized_end=179,
+)
+
+_MONSTERS.fields_by_name['monster'].message_type = _MONSTER
 DESCRIPTOR.message_types_by_name['Monster'] = _MONSTER
-DESCRIPTOR.message_types_by_name['MonsterId'] = _MONSTERID
+DESCRIPTOR.message_types_by_name['MonsterQt'] = _MONSTERQT
+DESCRIPTOR.message_types_by_name['Monsters'] = _MONSTERS
 
 Monster = _reflection.GeneratedProtocolMessageType('Monster', (_message.Message,), dict(
   DESCRIPTOR = _MONSTER,
@@ -125,12 +158,19 @@ Monster = _reflection.GeneratedProtocolMessageType('Monster', (_message.Message,
   ))
 _sym_db.RegisterMessage(Monster)
 
-MonsterId = _reflection.GeneratedProtocolMessageType('MonsterId', (_message.Message,), dict(
-  DESCRIPTOR = _MONSTERID,
+MonsterQt = _reflection.GeneratedProtocolMessageType('MonsterQt', (_message.Message,), dict(
+  DESCRIPTOR = _MONSTERQT,
   __module__ = 'messages.Monster_pb2'
-  # @@protoc_insertion_point(class_scope:MonsterId)
+  # @@protoc_insertion_point(class_scope:MonsterQt)
   ))
-_sym_db.RegisterMessage(MonsterId)
+_sym_db.RegisterMessage(MonsterQt)
+
+Monsters = _reflection.GeneratedProtocolMessageType('Monsters', (_message.Message,), dict(
+  DESCRIPTOR = _MONSTERS,
+  __module__ = 'messages.Monster_pb2'
+  # @@protoc_insertion_point(class_scope:Monsters)
+  ))
+_sym_db.RegisterMessage(Monsters)
 
 
 # @@protoc_insertion_point(module_scope)

@@ -9,12 +9,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :name, :string, 2
     optional :strength, :int32, 3
     optional :resistance, :int32, 4
-    optional :health, :int32, 5
+    optional :maxHealth, :int32, 5
+    optional :health, :int32, 6
   end
   add_message "HeroID" do
     optional :id, :int32, 1
+  end
+  add_message "Heroes" do
+    repeated :hero, :message, 1, "Hero"
   end
 end
 
 Hero = Google::Protobuf::DescriptorPool.generated_pool.lookup("Hero").msgclass
 HeroID = Google::Protobuf::DescriptorPool.generated_pool.lookup("HeroID").msgclass
+Heroes = Google::Protobuf::DescriptorPool.generated_pool.lookup("Heroes").msgclass

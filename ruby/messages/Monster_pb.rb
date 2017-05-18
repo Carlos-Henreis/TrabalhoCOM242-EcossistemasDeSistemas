@@ -11,10 +11,14 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :resistance, :int32, 4
     optional :health, :int32, 5
   end
-  add_message "MonsterId" do
-    optional :id, :int32, 1
+  add_message "MonsterQt" do
+    optional :qt, :int32, 1
+  end
+  add_message "Monsters" do
+    repeated :monster, :message, 1, "Monster"
   end
 end
 
 Monster = Google::Protobuf::DescriptorPool.generated_pool.lookup("Monster").msgclass
-MonsterId = Google::Protobuf::DescriptorPool.generated_pool.lookup("MonsterId").msgclass
+MonsterQt = Google::Protobuf::DescriptorPool.generated_pool.lookup("MonsterQt").msgclass
+Monsters = Google::Protobuf::DescriptorPool.generated_pool.lookup("Monsters").msgclass
