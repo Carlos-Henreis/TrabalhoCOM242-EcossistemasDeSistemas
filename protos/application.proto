@@ -6,11 +6,13 @@ import "messages/Dice.proto";
 import "messages/Monster.proto";
 
 service rubyInterface {
-	rpc getHero (HeroID) returns (Hero){}
+	rpc getHero (HeroID) returns (Heroes){}
+	rpc setHero (Hero) returns (Heroes){}
+	rpc addHero (Hero) returns (Heroes){}
 }
 
 service pythonInterface {
-	rpc generateMonster(MonsterId) returns (Monster){}
+	rpc generateMonster(MonsterQt) returns (Monsters){}
 }
 
 service javaInterface {

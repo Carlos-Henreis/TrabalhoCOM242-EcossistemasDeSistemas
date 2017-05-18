@@ -6,9 +6,14 @@ message Hero {
 	string name = 2;
 	int32 strength = 3;
 	int32 resistance = 4;
-	int32 health = 5;
+	int32 maxHealth = 5;
+	int32 health = 6;
 }
 
 message HeroID {
 	int32 id = 1;
+}
+
+message Heroes{
+	repeated Hero hero = 1;
 }

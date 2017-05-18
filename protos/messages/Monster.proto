@@ -8,6 +8,10 @@ message Monster {
 	int32 health = 5;
 }
 
-message MonsterId {
-	int32 id = 1;
+message MonsterQt {
+	int32 qt = 1;
+}
+
+message Monsters {
+	repeated Monster monster = 1;
 }
