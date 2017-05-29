@@ -17,6 +17,8 @@ class RubyApp < RubyInterface::Service
 
 	# -- local calls
 	def self_get_hero(heroId)
+		$hero_list.delete_if{ |h| h.health <= 0}
+
 		if(heroId.id != -1)
 		    return	$hero_list.select{ |h| h.id == heroId.id}
 		end
