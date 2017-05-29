@@ -4,20 +4,25 @@ require_relative '../messages/Dice_pb'
 require_relative '../messages/Monster_pb'
 require_relative '../messages/Combat_pb'
 
+$port = ':50051'
+$javaStub = nil
+$javaIp = nil
+$pythonStub = nil
+$pythonIp = nil
+
 class Switcher
-	@port = ':50051'
 	def jvip
 		print 'Digite o IP da máquina JAVA: '
-		$javaIP = gets.chomp
-		$javaIP += @port
+		$javaIp = gets.chomp
+		$javaIp += $port
 		$javaStub = JavaInterface::Stub.new($javaIp,:this_channel_is_insecure)
 	end
 	
 	def pyip
 		print 'Digite o IP da máquina PYTHON: '
-		$pythonIP = gets.chomp
-		$pythonIP += @port
-		$pythonStub = JavaInterface::Stub.new($pythonIp,:this_channel_is_insecure)
+		$pythonIp = gets.chomp
+		$pythonIp += ':50052'
+		$pythonStub = PythonInterface::Stub.new($pythonIp,:this_channel_is_insecure)
 	end
 	
 	def rh		
@@ -51,45 +56,45 @@ class Switcher
 		end 
 		print 'Tipo do dado (D4,D6,D8,D10,D12,D20,D100):'
 		t = gets.chomp
-		dice_type = DiceType.new(tipoDado: t.capitalize)
-
-		rolledDice = $javaStub.rollDice(dice_type)
-		puts '\n\nO dado rolou: #{rolledDice.rolledNumber}'
+		dice_type = DiceType.new(tipoDado: t.capitalize.to_sym)
+		puts $javaStub.class.name
+		rolledDice = $javaStub.roll_dice(dice_type)
+		puts "\n\nO dado rolou: #{rolledDice.rolledNumber}"
 	end
 	
 	def sc
-		if $javaStub == nil or $pythonStub
+		if $javaStub == nil or $pythonStub == nil
 			puts 'Defina o IP da máquina Java e Python'
 			return
 		end 
 		print 'Chame seus herois!\n Digite o Id ou -1 para todos:'
-		hID = HeroID.new(id: gets.chomp)
+		hID = HeroID.new(id: gets.chomp.to_i)
 		heroes = RubyApp.new.self_get_hero(hID)
 
-		print 'Quantidade de monstros: '
-		mons = $pythonStub.selfGenerateMonsters(MonsterQt.new(qt: gets.chomp))
-		c = Combat.new
 
+		print 'Quantidade de monstros: '
+		mons = $pythonStub.generate_monster(MonsterQt.new(qt: gets.chomp.to_i))
+		c = Combat.new
+		mons = mons.monster.to_a
+		puts mons.inspect
 		while not mons.empty? 
-			puts 'Seus adversários\n#########'
-			mons.each{|m| puts "#{m.id} #{m.name} #{m.health}/#{m.maxHealth}"}
+			puts "Seus adversários\n#########"
+			mons.each{|m| puts "#{m.id} #{m.name} #{m.health}"}
 			puts '#########'
 
-			puts '\nSua equipe\n#########'
+			puts "\nSua equipe\n#########"
 			heroes.each{|h| puts "#{h.id} #{h.name} #{h.health}/#{h.maxHealth}"}
 			puts '#########'
 
-			atk = nil
 			print 'Digite o id do heroi atacante: '
-			n = gets.chomp
+			n = gets.chomp.to_i
 			atk = heroes.select{|h| h.id == n}.first
 			if atk == nil
 				abort('Id inválido')
 			end
 
-			defender = nil
 			print 'Digite o id do monstro: ' 
-			n = gets.chomp
+			n = gets.chomp.to_i
 			defender = mons.select{|m| m.id == n}.first
 			if defender == nil
 				abort('Id inválido')
@@ -97,9 +102,9 @@ class Switcher
 
 			c.aHero = atk
 			c.aMonster = defender
-			c.who_attacks = :hero
+			c.who_attacks = :Hero.to_sym
 
-			c = $javaStub.calculateCombat(c)
+			c = $javaStub.calculate_combat(c)
 			mons.map!{|m| 
 				if m.id == defender.id
 					m = defender
@@ -107,15 +112,15 @@ class Switcher
 				end}
 			mons.delete_if{ |m| m.health == 0}
 
-			if c.who_attacks == :hero
+			if c.who_attacks == :Hero.to_sym
 				atk = c.aHero
-				RubyApp.new.this_set_hero(atk)
+				RubyApp.new.self_set_hero(atk)
 				heroes = RubyApp.new.self_get_hero(hID)
 			end
 			if c.deadDefender == false
-				print 'O monstro não foi derrotado, ele ira atacar'
-				c.who_attacks = :monster
-				$javaStub.calculateCombat(c)
+				puts 'O monstro não foi derrotado, ele ira atacar'
+				c.who_attacks = :Monster.to_sym
+				$javaStub.calculate_combat(c)
 			else 
 				print "Monstro #{defender.name} foi derrotado"
 			end

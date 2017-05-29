@@ -50,11 +50,6 @@ $hero_list << Hero.new(id: 666,
 
 
 $monster_list = []
-$javaStub = nil
-$javaIp = nil
-
-$pythonStub = nil
-$pythonIp = nil
 
 def print_menu
     puts "Python Application:"

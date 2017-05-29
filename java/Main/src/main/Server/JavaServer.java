@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class JavaServer extends Thread {
 
     Server server;
-    int port = 50054;
+    int port = 50051;
 
     @Override
     public void run(){

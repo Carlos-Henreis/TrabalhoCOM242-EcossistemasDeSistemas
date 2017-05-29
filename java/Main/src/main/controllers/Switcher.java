@@ -195,12 +195,12 @@ public class Switcher {
     }
 
     private void setPythonStub() {
-        this.pyChannel = ManagedChannelBuilder.forAddress(this.pyHost, port).usePlaintext(true).build();
+        this.pyChannel = ManagedChannelBuilder.forAddress(this.pyHost, 50052).usePlaintext(true).build();
         this.pythonStub = pythonInterfaceGrpc.newBlockingStub(pyChannel);
     }
 
     private void setRubyStub() {
-        this.rbChannel = ManagedChannelBuilder.forAddress(this.rbHost, port).usePlaintext(true).build();
+        this.rbChannel = ManagedChannelBuilder.forAddress(this.rbHost, 50053).usePlaintext(true).build();
         this.rubyStub = rubyInterfaceGrpc.newBlockingStub(rbChannel);
     }
 }

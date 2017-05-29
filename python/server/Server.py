@@ -13,7 +13,7 @@ class Server (threading.Thread):
     	app_grpc.pythonInterfaceServicer.__init__(self)
     	self._stop_event = threading.Event()
     	self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    	self.server.add_insecure_port('[::]:50051')
+    	self.server.add_insecure_port('[::]:50052')
     	app_grpc.add_pythonInterfaceServicer_to_server(PythonApp(),self.server)
     def stop(self):
     	self.server.stop(0)

@@ -17,10 +17,10 @@ class RubyApp < RubyInterface::Service
 
 	# -- local calls
 	def self_get_hero(heroId)
-		if(heroId != -1)
-		    return	$hero_list.select{ |h| h == heroId.id}
+		if(heroId.id != -1)
+		    return	$hero_list.select{ |h| h.id == heroId.id}
 		end
-		$hero_list
+		return $hero_list
 	end
 
 	def self_set_hero(hero)

@@ -2,8 +2,15 @@ from messages.Hero_pb2 import *
 from messages.Monster_pb2 import *
 from messages.Combat_pb2 import *
 from server.PythonApp import *
+from messages import Dice_pb2 as dice_pkg
 
+from interfaces import application_pb2_grpc as app_grpc
 port = ':50051'
+
+globals()['javaStub'] = None
+globals()['rubyStub'] = None
+globals()['javaIP'] = None
+globals()['rubyIP'] = None
 
 def switch_op(op):
 	if (op == 'jvip'):
@@ -13,7 +20,7 @@ def switch_op(op):
 		globals()['javaStub'] = app_grpc.javaInterfaceStub(channel)
 	elif (op == 'rbip'):
 		globals()['rubyIP'] = input('Digite o IP da máquina RUBY: ')
-		globals()['rubyIP'] += port
+		globals()['rubyIP'] += ':50053'
 		channel = grpc.insecure_channel(globals()['rubyIP'])
 		globals()['rubyStub'] = app_grpc.javaInterfaceStub(channel)
 	elif(op == 'rh'):
@@ -38,6 +45,7 @@ def switch_op(op):
 			print('res: '+hero.resistance)
 			print('hp: '+hero.health+'/'+hero.maxHealth)
 	elif(op == 'rd'):
+
 		if(globals()['javaStub'] == None):
 			print('Defina o IP da máquina Java')
 			return
