@@ -17,9 +17,9 @@ def switch_op(op):
 		channel = grpc.insecure_channel(globals()['rubyIP'])
 		globals()['rubyStub'] = app_grpc.javaInterfaceStub(channel)
 	elif(op == 'rh'):
-		if(globals()['rubyStub'] == None)
+		if(globals()['rubyStub'] == None):
 			print('Defina o IP da máquina Ruby')
-			break
+			return
 		h = Hero()
 		h.id = int(input('Digite o ID do hero: '))
 		h.name = input('Digite o nome do hero: ')
@@ -29,7 +29,7 @@ def switch_op(op):
 		h.health = h_hp
 		h.maxHealth = h_hp
 
-		h_list = globals()['rubyStub'].setHero(h)
+		h_list = globals()['rubyStub'].addHero(h)
 		print('Um heroi se juntou a equipe!')
 		for hero in h_list:
 			print('\nid: '+hero.id)
@@ -38,9 +38,9 @@ def switch_op(op):
 			print('res: '+hero.resistance)
 			print('hp: '+hero.health+'/'+hero.maxHealth)
 	elif(op == 'rd'):
-		if(globals()['javaStub'] == None)
+		if(globals()['javaStub'] == None):
 			print('Defina o IP da máquina Java')
-			break
+			return
 
 		t = input('Tipo do dado (D4,D6,D8,D10,D12,D20,D100):')
 		dice_type = dice_pkg.DiceType(tipoDado=t.upper())
@@ -49,9 +49,9 @@ def switch_op(op):
 		print('\n\nO dado rolou: '+str(rolledDice.rolledNumber))
 
 	elif(op == 'sc'):
-		if(globals()['javaStub'] == None)
+		if(globals()['javaStub'] == None):
 			print('Defina o IP da máquina Java')
-			break
+			return
 
 		call = input("Chame seus herois!\n Digite o Id ou -1 para todos:")
 
@@ -72,7 +72,7 @@ def switch_op(op):
 			for monster in mons.monster:
 				print(monster.id + ' ' 
 					+ monster.name 
-					+ ' ' monster.health 
+					+ ' ' +monster.health 
 					+ '/' + monster.maxHealth)
 			print('#########')
 
@@ -80,7 +80,7 @@ def switch_op(op):
 			for hero in hero_list.hero:
 				print(hero.id + ' ' 
 					+ hero.name 
-					+ ' ' hero.health 
+					+ ' ' + hero.health 
 					+ '/' + hero.maxHealth)
 			print('#########')
 
@@ -96,7 +96,7 @@ def switch_op(op):
 			n = input('Digite o id do monstro: ')
 			defender = None
 			for monster in mons.monster:
-				if (monster.id == n)
+				if (monster.id == n):
 					defender = monster
 					break
 			if(defender == None):
@@ -119,9 +119,9 @@ def switch_op(op):
 			
 
 	elif(op == 'sh'):
-		if(globals()['rubyStub'] == None)
+		if(globals()['rubyStub'] == None):
 			print('Defina o IP da máquina Ruby')
-			break
+			return
 		hId = HeroID()
 		hId.id = -1
 		heroes = globals()['rubyStub'].getHero(hId)

@@ -13,8 +13,8 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     optional :deadDefender, :bool, 4
   end
   add_enum "Combat.attacker" do
-    value :hero, 0
-    value :monster, 1
+    value :Hero, 0
+    value :Monster, 1
   end
 end
 
