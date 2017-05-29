@@ -1,18 +1,26 @@
 require 'grpc'
 require_relative '../interfaces/application_services_pb'
+require_relative '../messages/Hero_pb'
+
 
 
 class RubyApp < RubyInterface::Service
 	def get_hero(heroId_req, _unused_call)
-		self.self_get_hero
+		h = Heroes.new
+		h.hero.concat self.self_get_hero(heroId_req)
+		h
 	end
 
 	def set_hero(hero_req, _unused_call)
-		self.self_set_hero
+		h = Heroes.new
+		h.hero.concat self.self_set_hero(hero_req)
+		h
 	end
 
 	def add_hero(hero_req, _unused_call)
-		self.self_add_hero
+		h.Heroes.new
+		h.hero.concat self.self_add_hero(hero_req)
+		h
 	end
 
 	# -- local calls

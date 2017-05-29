@@ -105,6 +105,7 @@ class Switcher
 			c.aHero = atk
 			c.aMonster = defender
 			c.who_attacks = :Hero.to_sym
+			c.deadDefender = false
 
 			c = $javaStub.calculate_combat(c)
 			mons.map!{|m| (m.id == defender.id) ? c.aMonster : m }

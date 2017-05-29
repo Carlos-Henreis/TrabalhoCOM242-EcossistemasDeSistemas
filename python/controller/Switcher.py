@@ -5,6 +5,7 @@ from server.PythonApp import *
 from messages import Dice_pb2 as dice_pkg
 
 from interfaces import application_pb2_grpc as app_grpc
+
 port = ':50051'
 
 globals()['javaStub'] = None
@@ -22,7 +23,7 @@ def switch_op(op):
 		globals()['rubyIP'] = input('Digite o IP da máquina RUBY: ')
 		globals()['rubyIP'] += ':50053'
 		channel = grpc.insecure_channel(globals()['rubyIP'])
-		globals()['rubyStub'] = app_grpc.javaInterfaceStub(channel)
+		globals()['rubyStub'] = app_grpc.rubyInterfaceStub(channel)
 	elif(op == 'rh'):
 		if(globals()['rubyStub'] == None):
 			print('Defina o IP da máquina Ruby')
@@ -117,9 +118,9 @@ def switch_op(op):
 			c = globals()['javaStub'].calculateCombat(c)
 			
 			for monster in mons.monster:
-				if monster.id == c.aMonster.id
+				if(monster.id == c.aMonster.id):
 					monster.health = c.aMonster.health
-				if monster.health >= 0
+				if(monster.health >= 0):
 					mons.monster.remove(monster)
 
 			if (c.deadDefender == False):
@@ -137,12 +138,19 @@ def switch_op(op):
 			return
 		hId = HeroID()
 		hId.id = -1
-		heroes = globals()['rubyStub'].getHero(hId)
-		for hero in heroes:
+		try:
+			heroes = globals()['rubyStub'].getHero(hId)
+			heroes = globals()['rubyStub'].getHero(hId)
+			for hero in heroes.hero:
+				print('#######')
+				print('id: ' + str(hero.id))
+				print('name: ' + hero.name)
+				print('str: ' + str(hero.strength))
+				print('res: ' + str(hero.resistance))
+				print('health: '+ str(hero.health) + '/' + str(hero.maxHealth))
 			print('#######')
-			print('id: ' + str(hero.id))
-			print('name: ' + hero.name)
-			print('str: ' + str(hero.strength))
-			print('res: ' + str(hero.resistance))
-			print('health: '+ str(hero.health) + '/' + str(hero.maxHealth))
-		print('#######')
+		except Exception as e:
+			print(e)
+		
+		
+		
