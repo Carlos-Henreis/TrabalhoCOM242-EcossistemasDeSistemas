@@ -26,6 +26,8 @@ public class JavaApp extends javaInterfaceGrpc.javaInterfaceImplBase {
                 io.grpc.stub.StreamObserver<CombatOuterClass.Combat> responseObserver) {
             Combat response = ThisCalculateCombat(request);
             responseObserver.onNext(response);
+            System.err.print("##rsponse##");
+            System.err.print(response);
             responseObserver.onCompleted();
         }
 
@@ -59,13 +61,15 @@ public class JavaApp extends javaInterfaceGrpc.javaInterfaceImplBase {
                 hit += atk.getStrength();
                 if(hit  > def.getResistance()) {
                     int hp = def.getHealth();
-                    hp -= ThisRollDice(dt).getRolledNumber();
+                    hp -= ThisRollDice(dt).getRolledNumber()+atk.getStrength();
                     def = Monster.newBuilder(def).setHealth(hp).build();
                     cBuilder.setAMonster(def);
                 }
                 
                 if(def.getHealth() <= 0) {
-                    c = cBuilder.setDeadDefender(true).build();
+                    cBuilder.setDeadDefender(true);
+                } else {
+                    cBuilder.setDeadDefender(false);
                 }
                 
             } else {
@@ -76,16 +80,22 @@ public class JavaApp extends javaInterfaceGrpc.javaInterfaceImplBase {
                 
                 if(hit  > def.getResistance()) {
                     int hp = def.getHealth();
-                    hp -= ThisRollDice(dt).getRolledNumber();
+                    hp -= ThisRollDice(dt).getRolledNumber()+atk.getStrength();
                     def = Hero.newBuilder(def).setHealth(hp).build();
                     cBuilder.setAHero(def);
                 }
                 
                 if(def.getHealth() <= 0) {
-                    c = cBuilder.setDeadDefender(true).build();
-                } 
+                    cBuilder.setDeadDefender(true);
+                } else {
+                    cBuilder.setDeadDefender(false);
+                }
             }
-            
+            System.err.print("antes\n");
+            System.err.print(c);
+            c = cBuilder.build();
+            System.err.print("depois\n");
+            System.err.print(c);
             return c;
         }
     }

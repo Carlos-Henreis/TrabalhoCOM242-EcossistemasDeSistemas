@@ -45,10 +45,17 @@ monsters_list[4].health = 20
 
 monsters_list.append(monster_pkg.Monster())
 monsters_list[5].id = 5
-monsters_list[5].name = 'dragon'
-monsters_list[5].strength = 10
-monsters_list[5].resistance = 20
-monsters_list[5].health = 40
+monsters_list[5].name = 'Sir Pericles'
+monsters_list[5].strength = 6666
+monsters_list[5].resistance = 6666
+monsters_list[5].health = 9000000
+
+monsters_list.append(monster_pkg.Monster())
+monsters_list[6].id = 6
+monsters_list[6].name = 'dragon'
+monsters_list[6].strength = 10
+monsters_list[6].resistance = 20
+monsters_list[6].health = 40
 
 
 
@@ -58,7 +65,7 @@ class PythonApp(pythonInterfaceServicer):
 		qt = monsterQt.qt
 		monsters = Monsters()
 		for n in range(qt):
-			m = monsters_list[randrange(5)]
+			m = monsters_list[randrange(6)]
 			mons = monsters.monster.add()
 			mons.id = m.id
 			mons.name = m.name

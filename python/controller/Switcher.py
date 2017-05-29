@@ -75,7 +75,7 @@ def switch_op(op):
 		mons = PythonApp.selfGenerateMonsters(mQt)
 		c = Combat()
 
-		while len(mons.monster):
+		while len(mons.monster) or len(hero_list.hero):
 			print('Seus adversários\n#########')
 			for monster in mons.monster:
 				print(monster.id + ' ' 
@@ -115,17 +115,22 @@ def switch_op(op):
 			c.who_attacks = 'hero'
 
 			c = globals()['javaStub'].calculateCombat(c)
-			if (c.who_attacks == 'hero'):
-				atk = c.aHero
-				globals()['rubyStub'].setHero(atk)
+			
+			for monster in mons.monster:
+				if monster.id == c.aMonster.id
+					monster.health = c.aMonster.health
+				if monster.health >= 0
+					mons.monster.remove(monster)
+
 			if (c.deadDefender == False):
 				print('O monstro não foi derrotado, ele ira atacar')
 				c.who_attacks = 'monster'
-				globals()['javaStub'].calculateCombat(c)
+				c = globals()['javaStub'].calculateCombat(c)
+				
+				hero_list = globals()['rubyStub'].setHero(c.aHero)
 			else: 
 				print('Monstro ' + defender.name + ' foi derrotado')
-			
-
+				
 	elif(op == 'sh'):
 		if(globals()['rubyStub'] == None):
 			print('Defina o IP da máquina Ruby')
@@ -141,4 +146,3 @@ def switch_op(op):
 			print('res: ' + str(hero.resistance))
 			print('health: '+ str(hero.health) + '/' + str(hero.maxHealth))
 		print('#######')
-
