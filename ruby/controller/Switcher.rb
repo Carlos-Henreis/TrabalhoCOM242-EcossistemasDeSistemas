@@ -28,15 +28,15 @@ class Switcher
 	def rh
 		h = Hero.new
 		print 'Digite o ID do hero: '
-		h.id = gets.chomp
+		h.id = gets.chomp.to_i
 		print 'Digite o nome do hero: '
 		h.name = gets.chomp
 		print 'Digite a força do hero: '
-		h.strength = gets.chomp
+		h.strength = gets.chomp.to_i
 		print 'Digite a resistência do hero: '
-		h.resistance = gets.chomp
+		h.resistance = gets.chomp.to_i
 		print 'Digite a vida do hero: '
-		h_hp = gets.chomp
+		h_hp = gets.chomp.to_i
 		h.health = h_hp
 		h.maxHealth = h_hp
 
@@ -76,8 +76,10 @@ class Switcher
 		mons = $pythonStub.generate_monster(MonsterQt.new(qt: gets.chomp.to_i))
 		c = Combat.new
 		mons = mons.monster.to_a
-		puts mons.inspect
-		while not mons.empty?
+
+		while (not mons.empty?) and (not heroes.empty?)
+			puts heroes.inspect
+			puts heroes.length
 			puts "Seus adversários\n#########"
 			mons.each{|m| puts "#{m.id} #{m.name} #{m.health}"}
 			puts '#########'
@@ -108,7 +110,7 @@ class Switcher
 			mons.map!{|m| (m.id == defender.id) ? c.aMonster : m }
 				mons.compact!
 			mons.delete_if{ |m| m.health <= 0}
-			puts mons.inspect
+
 
 			if c.who_attacks == :Hero.to_sym
 				atk = c.aHero
@@ -122,6 +124,9 @@ class Switcher
 
 				RubyApp.new.self_set_hero(c.aHero)
 				heroes = RubyApp.new.self_get_hero(hID)
+				if (heroes.length == 0)
+					puts 'Os heros foram derrotados'
+				end
 			else
 				puts "Monstro #{defender.name} foi derrotado"
 			end
