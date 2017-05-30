@@ -34,6 +34,7 @@ class RubyApp < RubyInterface::Service
 	end
 
 	def self_set_hero(hero)
+		$hero_list.map!{ |h| h.id == hero.id ? hero : h}
 		$hero_list.delete_if{ |h| (h.id == hero.id && hero.health <= 0)}
 		$hero_list
 	end

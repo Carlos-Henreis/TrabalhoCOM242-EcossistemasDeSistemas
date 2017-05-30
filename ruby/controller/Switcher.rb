@@ -78,8 +78,7 @@ class Switcher
 		mons = mons.monster.to_a
 
 		while (not mons.empty?) and (not heroes.empty?)
-			puts heroes.inspect
-			puts heroes.length
+
 			puts "Seus adversários\n#########"
 			mons.each{|m| puts "#{m.id} #{m.name} #{m.health}"}
 			puts '#########'
@@ -108,8 +107,11 @@ class Switcher
 			c.deadDefender = false
 
 			c = $javaStub.calculate_combat(c)
-			mons.map!{|m| (m.id == defender.id) ? c.aMonster : m }
-				mons.compact!
+			i = mons.index(defender)
+
+			mons[i] = c.aMonster
+
+			mons.compact!
 			mons.delete_if{ |m| m.health <= 0}
 
 
