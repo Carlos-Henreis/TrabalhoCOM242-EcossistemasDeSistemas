@@ -52,7 +52,7 @@ $hero_list << Hero.new(id: 666,
 $monster_list = []
 
 def print_menu
-    puts "Python Application:"
+    puts "Ruby Application:"
     puts "jvip \t\t\t Change JavaApp ip"
     puts "pyip \t\t\t Change PythonApp ip"
     puts "sc \t\t\t Start Combat"
