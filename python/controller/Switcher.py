@@ -36,15 +36,19 @@ def switch_op(op):
 		h_hp = int(input('Digite a vida do hero: '))
 		h.health = h_hp
 		h.maxHealth = h_hp
-
-		h_list = globals()['rubyStub'].addHero(h)
-		print('Um heroi se juntou a equipe!')
-		for hero in h_list:
-			print('\nid: '+hero.id)
-			print('name: '+hero.name)
-			print('str: '+hero.strength)
-			print('res: '+hero.resistance)
-			print('hp: '+hero.health+'/'+hero.maxHealth)
+		try:
+			h_list = globals()['rubyStub'].addHero(h)
+			print('Um heroi se juntou a equipe!')
+			for hero in h_list.hero:
+				print('\nid: '+str(hero.id))
+				print('name: '+hero.name)
+				print('str: '+str(hero.strength))
+				print('res: '+str(hero.resistance))
+				print('hp: '+str(hero.health)+'/'+str(hero.maxHealth))
+		except Exception as e:
+			print(e)
+		
+		
 	elif(op == 'rd'):
 
 		if(globals()['javaStub'] == None):
@@ -62,47 +66,46 @@ def switch_op(op):
 			print('Defina o IP da máquina Java')
 			return
 
-		call = input("Chame seus herois!\n Digite o Id ou -1 para todos:")
+		call = int(input("Chame seus herois!\n Digite o Id ou -1 para todos:"))
 
 		hID = HeroID()
 		hID.id = call
 
-		hero_list = globals()['rubyStub'].getHero(hID)
+		try:
+			hero_list = globals()['rubyStub'].getHero(hID)
+		except Exception as e:
+			print(e)
+			return		
 
 		n = int(input("Quantidade de monstros: "))
 		mQt = MonsterQt()
 		mQt.qt = n
 		
-		mons = PythonApp.selfGenerateMonsters(mQt)
+		mons = PythonApp().selfGenerateMonster(mQt)
 		c = Combat()
 
-		while len(mons.monster) or len(hero_list.hero):
+		while len(mons.monster) and len(hero_list.hero):
 			print('Seus adversários\n#########')
 			for monster in mons.monster:
-				print(monster.id + ' ' 
-					+ monster.name 
-					+ ' ' +monster.health 
-					+ '/' + monster.maxHealth)
+				print("%i %s %i" %(monster.id, monster.name, monster.health))
 			print('#########')
 
 			print('\nSua equipe\n#########')
 			for hero in hero_list.hero:
-				print(hero.id + ' ' 
-					+ hero.name 
-					+ ' ' + hero.health 
-					+ '/' + hero.maxHealth)
+				print("%i %s %i/%i" %(hero.id, hero.name, hero.health, hero.maxHealth))
 			print('#########')
 
-			n = input('Digite o id do heroi atacante: ')
+			n = int(input('Digite o id do heroi atacante: '))
 			atk = None
 			for hero in hero_list.hero:
 				if (hero.id == n):
 					atk = hero
 					break
 			if(atk == None):
+				print('ID inválido')
 				sys.exit(1)
 
-			n = input('Digite o id do monstro: ')
+			n = int(input('Digite o id do monstro: '))
 			defender = None
 			for monster in mons.monster:
 				if (monster.id == n):
@@ -111,26 +114,34 @@ def switch_op(op):
 			if(defender == None):
 				sys.exit(1)
 
-			c.aHero = atk
-			c.aMonster = defender
-			c.who_attacks = 'hero'
-
-			c = globals()['javaStub'].calculateCombat(c)
+			c.aHero.CopyFrom(atk)
+			c.aMonster.CopyFrom(defender)
+			c.who_attacks = 0
+			try:
+				c = globals()['javaStub'].calculateCombat(c)	
+			except Exception as e:
+				print(e)
+			
 			
 			for monster in mons.monster:
 				if(monster.id == c.aMonster.id):
 					monster.health = c.aMonster.health
-				if(monster.health >= 0):
+				if(monster.health <= 0):
 					mons.monster.remove(monster)
 
 			if (c.deadDefender == False):
 				print('O monstro não foi derrotado, ele ira atacar')
-				c.who_attacks = 'monster'
-				c = globals()['javaStub'].calculateCombat(c)
-				
-				hero_list = globals()['rubyStub'].setHero(c.aHero)
+				c.who_attacks = 1
+				try:
+					c = globals()['javaStub'].calculateCombat(c)	
+					hero_list = globals()['rubyStub'].setHero(c.aHero)
+				except Exception as e:
+					print(e)
+							
+				if c.deadDefender == True :
+					print("O herói %s foi morto!" %(c.aHero.name))
 			else: 
-				print('Monstro ' + defender.name + ' foi derrotado')
+				print("Monstro %s foi derrotado" %(defender.name))
 				
 	elif(op == 'sh'):
 		if(globals()['rubyStub'] == None):

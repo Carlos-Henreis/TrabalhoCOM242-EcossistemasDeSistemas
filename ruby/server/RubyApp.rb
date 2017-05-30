@@ -18,7 +18,7 @@ class RubyApp < RubyInterface::Service
 	end
 
 	def add_hero(hero_req, _unused_call)
-		h.Heroes.new
+		h = Heroes.new
 		h.hero.concat self.self_add_hero(hero_req)
 		h
 	end
@@ -34,12 +34,13 @@ class RubyApp < RubyInterface::Service
 	end
 
 	def self_set_hero(hero)
-		$hero_list.delete_if{ |h| h.id == hero.id }
-		$hero_list << hero
+		$hero_list.delete_if{ |h| (h.id == hero.id && hero.health <= 0)}
+		$hero_list
 	end
 
 	def self_add_hero(hero)
 		$hero_list << hero
 		$hero_list.uniq!
+		$hero_list
 	end
 end
