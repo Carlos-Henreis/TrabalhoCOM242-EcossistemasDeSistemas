@@ -79,11 +79,11 @@ class Switcher
 
 		while (not mons.empty?) and (not heroes.empty?)
 
-			puts "Seus adversários\n#########"
+			puts "Seus adversários\n#########\nid name life"
 			mons.each{|m| puts "#{m.id} #{m.name} #{m.health}"}
 			puts '#########'
 
-			puts "\nSua equipe\n#########"
+			puts "\nSua equipe\n#########\nid name life"
 			heroes.each{|h| puts "#{h.id} #{h.name} #{h.health}/#{h.maxHealth}"}
 			puts '#########'
 

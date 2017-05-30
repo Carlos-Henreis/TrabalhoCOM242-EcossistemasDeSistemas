@@ -7,28 +7,26 @@ package main.controllers;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import main.Server.JavaApp;
 
 import main.interfaces.pythonInterfaceGrpc;
 import main.interfaces.pythonInterfaceGrpc.pythonInterfaceBlockingStub;
-import main.interfaces.pythonInterfaceGrpc.pythonInterfaceStub;
 
 import main.interfaces.rubyInterfaceGrpc;
 import main.interfaces.rubyInterfaceGrpc.rubyInterfaceBlockingStub;
-import main.interfaces.rubyInterfaceGrpc.rubyInterfaceStub;
-import main.messages.CombatOuterClass;
+
 import main.messages.CombatOuterClass.Combat;
 import main.messages.DiceOuterClass.Dice;
 import main.messages.DiceOuterClass.DiceType;
 import main.messages.DiceOuterClass.DiceType.Type;
 
-import main.messages.HeroOuterClass;
 import main.messages.HeroOuterClass.Hero;
 import main.messages.HeroOuterClass.HeroID;
 import main.messages.HeroOuterClass.Heroes;
 
-import main.messages.MonsterOuterClass;
 import main.messages.MonsterOuterClass.Monster;
 import main.messages.MonsterOuterClass.MonsterQt;
 import main.messages.MonsterOuterClass.Monsters;
@@ -57,12 +55,12 @@ public class Switcher {
         switch (op) {
             case "pyip":
                 System.out.print("Python - Digite o IP:");
-                this.pyHost = in.nextLine();
+                this.pyHost = in.next();
                 setPythonStub();
                 break;
             case "rbip":
                 System.out.print("Ruby - Digite o IP:");
-                this.rbHost = in.nextLine();
+                this.rbHost = in.next();
                 setRubyStub();
                 break;
             case "sc":
@@ -75,7 +73,7 @@ public class Switcher {
                 HeroID hID = HeroID.newBuilder().setId(call).build();
 
                 Heroes heroes = rubyStub.getHero(hID);
-                
+
                 int n;
                 System.out.print("Quantidade de monstros: ");
                 n = in.nextInt();
@@ -83,22 +81,23 @@ public class Switcher {
 
                 Monsters monsters = pythonStub.generateMonster(request);
                 Combat.Builder cBuilder = Combat.newBuilder();
-                while (monsters.getMonsterCount() != 0) {
+                while (monsters.getMonsterCount() > 0 && heroes.getHeroCount() > 0 ) {
 
-                    System.out.println("Seus adversários\n##########");
+                    System.out.println("Seus adversários\n##########\nid name hp");
                     for (int i = 0; i < monsters.getMonsterCount(); i++) {
-                        System.out.print(monsters.getMonster(i).getId() + " ");
-                        System.out.print(monsters.getMonster(i).getName());
-                        System.out.println(" HP [" + monsters.getMonster(i).getHealth() + "]");
+                        System.out.printf("%d %s %d\n",monsters.getMonster(i).getId(),
+                                                     monsters.getMonster(i).getName(),
+                                                     monsters.getMonster(i).getHealth());
 
                     }
                     System.out.println("##########");
 
-                    System.out.println("\nSua Equipe\n##########");
+                    System.out.println("\nSua Equipe\n##########\nid name hp");
                     for (int i = 0; i < heroes.getHeroCount(); i++) {
-                        System.out.print(heroes.getHero(i).getId() + " ");
-                        System.out.print(heroes.getHero(i).getName());
-                        System.out.println(" HP [" + monsters.getMonster(i).getHealth() + "]");
+                        System.out.printf("%d %s %d/%d\n",heroes.getHero(i).getId(),
+                                                     heroes.getHero(i).getName(),
+                                                     heroes.getHero(i).getHealth(),
+                                                     heroes.getHero(i).getMaxHealth());
                     }
                     System.out.println("##########");
 
@@ -134,23 +133,42 @@ public class Switcher {
 
                     Combat c = cBuilder.build();
                     c = JavaApp.ThisCalculateCombat(c);
-                    if(c.getWhoAttacks() == Combat.attacker.hero) {
-                        atk = c.getAHero();
-                        heroes = rubyStub.setHero(atk);
+                    
+                    for(int i = 0 ; i < monsters.getMonsterCount(); i++) {
+                        if(def.getId() == monsters.getMonster(i).getId()) {
+                            if(c.getAMonster().getHealth() <= 0){
+                                ArrayList<Monster> l = new ArrayList(monsters.getMonsterList());
+                                l.remove(i);
+                                Monsters.Builder lblder = Monsters.newBuilder().addAllMonster(l);
+                                monsters = lblder.build();
+                            } else {
+                                ArrayList<Monster> l = new ArrayList(monsters.getMonsterList());
+                                l.set(i, c.getAMonster());
+                                Monsters.Builder lblder = Monsters.newBuilder().addAllMonster(l);
+                                monsters = lblder.build();
+                            }
+                            break;
+                        }
                     }
-                    if (!c.getDeadDefender()) {
-                        System.out.println("O monstro não foi derrotado, ele irá atacar!");
-                        cBuilder = Combat.newBuilder(c).setWhoAttacks(Combat.attacker.monster);
-                        c = cBuilder.build();
-                        JavaApp.ThisCalculateCombat(c);
+                    
+                    if (c.getDeadDefender() == false) {
+                        System.out.println("O monstro não foi derrotado, ele irá atacar");
+                        c = c.toBuilder().setWhoAttacks(Combat.attacker.monster).build();
+                        c = JavaApp.ThisCalculateCombat(c);
+                        rubyStub.setHero(c.getAHero());
+                        heroes = rubyStub.getHero(hID);
+                        if(c.getDeadDefender() == true) {
+                            System.out.printf("O heroi %s morreu!\n",atk.getName());
+                        }
                     } else {
-                        System.out.println("Monstro " + def.getName() + " derrotado");
+                        System.out.printf("O monstro %s foi derrotado.\n",def.getName());
                     }
+                    
 
                 }
                 break;
             case "rh":
-                if(rbHost == null) {
+                if (rbHost == null) {
                     System.out.println("Defina o IP da máquina Ruby");
                     break;
                 }
@@ -158,7 +176,7 @@ public class Switcher {
                 System.out.print("Id do héroi: ");
                 hBuilder.setId(in.nextInt());
                 System.out.print("Nome do hero: ");
-                hBuilder.setName(in.nextLine());
+                hBuilder.setName(in.next());
                 System.out.print("Força do hero: ");
                 hBuilder.setStrength(in.nextInt());
                 System.out.print("Resistência do hero: ");
@@ -168,28 +186,47 @@ public class Switcher {
                 hBuilder.setHealth(hHp);
                 hBuilder.setMaxHealth(hHp);
                 Hero h = hBuilder.build();
-                
-                Heroes hs = rubyStub.setHero(h);
-                
+                try {
+                    Heroes hs = rubyStub.addHero(h);
+                    for (int i = 0; i < hs.getHeroCount(); i++) {
+                        h = hs.getHero(i);
+                        System.out.println("\nID: " + h.getId());
+                        System.out.println("Nome: " + h.getName());
+                        System.out.println("Força: " + h.getStrength());
+                        System.out.println("Resistência: " + h.getResistance());
+                        System.out.println("Vida: " + h.getHealth() + "/" + h.getMaxHealth());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case "sh":
-                Heroes all = rubyStub.getHero(HeroID.newBuilder().setId(-1).build());
-                Hero newhero = null;
-                System.out.println("Um herói se juntou a campanha!");
-                for(int i = 0 ; i < all.getHeroCount() ; i++) {
-                    newhero = all.getHero(i);
-                    System.out.println("\nID: " + newhero.getId());
-                    System.out.println("Nome: " + newhero.getName());
-                    System.out.println("Força: " + newhero.getStrength());
-                    System.out.println("Resistência: " + newhero.getResistance());
-                    System.out.println("Vida: " + newhero.getHealth() + "/" + newhero.getMaxHealth());
+                if (rbHost == null) {
+                    System.out.println("Defina o IP da máquina Ruby");
+                    break;
                 }
+                try {
+                    Heroes all = rubyStub.getHero(HeroID.newBuilder().setId(-1).build());
+                    Hero newhero;
+
+                    for (int i = 0; i < all.getHeroCount(); i++) {
+                        newhero = all.getHero(i);
+                        System.out.println("\nID: " + newhero.getId());
+                        System.out.println("Nome: " + newhero.getName());
+                        System.out.println("Força: " + newhero.getStrength());
+                        System.out.println("Resistência: " + newhero.getResistance());
+                        System.out.println("Vida: " + newhero.getHealth() + "/" + newhero.getMaxHealth());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 break;
             case "rd":
                 System.out.print("Entre com o tipo de dado(D4, D6, D8, D10, D12, D20, D100): ");
-                DiceType dt = DiceType.newBuilder().setTipoDado(Type.valueOf(in.nextLine())).build();
+                DiceType dt = DiceType.newBuilder().setTipoDado(Type.valueOf(in.next())).build();
                 Dice dice = JavaApp.ThisRollDice(dt);
-                System.out.println("O dado rolou: "+ dice.getRolledNumber());
+                System.out.println("O dado rolou: " + dice.getRolledNumber());
                 break;
         }
     }

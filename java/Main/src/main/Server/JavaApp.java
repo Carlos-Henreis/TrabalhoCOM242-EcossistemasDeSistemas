@@ -26,8 +26,8 @@ public class JavaApp extends javaInterfaceGrpc.javaInterfaceImplBase {
                 io.grpc.stub.StreamObserver<CombatOuterClass.Combat> responseObserver) {
             Combat response = ThisCalculateCombat(request);
             responseObserver.onNext(response);
-            System.err.print("##rsponse##");
-            System.err.print(response);
+            //System.err.print("##rsponse##");
+            //System.err.print(response);
             responseObserver.onCompleted();
         }
 
@@ -91,11 +91,11 @@ public class JavaApp extends javaInterfaceGrpc.javaInterfaceImplBase {
                     cBuilder.setDeadDefender(false);
                 }
             }
-            System.err.print("antes\n");
-            System.err.print(c);
+            //System.err.print("antes\n");
+            //System.err.print(c);
             c = cBuilder.build();
-            System.err.print("depois\n");
-            System.err.print(c);
+            //System.err.print("depois\n");
+            //System.err.print(c);
             return c;
         }
     }

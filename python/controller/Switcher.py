@@ -85,12 +85,12 @@ def switch_op(op):
 		c = Combat()
 
 		while len(mons.monster) and len(hero_list.hero):
-			print('Seus adversários\n#########')
+			print('Seus adversários\n#########\nid name life')
 			for monster in mons.monster:
 				print("%i %s %i" %(monster.id, monster.name, monster.health))
 			print('#########')
 
-			print('\nSua equipe\n#########')
+			print('\nSua equipe\n#########\nid name life')
 			for hero in hero_list.hero:
 				print("%i %s %i/%i" %(hero.id, hero.name, hero.health, hero.maxHealth))
 			print('#########')
@@ -112,6 +112,7 @@ def switch_op(op):
 					defender = monster
 					break
 			if(defender == None):
+				print('ID inválido')
 				sys.exit(1)
 
 			c.aHero.CopyFrom(atk)
@@ -121,22 +122,26 @@ def switch_op(op):
 				c = globals()['javaStub'].calculateCombat(c)	
 			except Exception as e:
 				print(e)
+				return
 			
-			
-			for monster in mons.monster:
-				if(monster.id == c.aMonster.id):
-					monster.health = c.aMonster.health
-				if(monster.health <= 0):
-					mons.monster.remove(monster)
-
+			for i in range(len(mons.monster)):
+				if mons.monster[i].id == defender.id:
+					if c.aMonster.health <= 0:
+						mons.monster.pop(i)
+					else :
+						mons.monster[i].CopyFrom(c.aMonster)
+					break
+		
 			if (c.deadDefender == False):
 				print('O monstro não foi derrotado, ele ira atacar')
 				c.who_attacks = 1
 				try:
 					c = globals()['javaStub'].calculateCombat(c)	
-					hero_list = globals()['rubyStub'].setHero(c.aHero)
+					globals()['rubyStub'].setHero(c.aHero)
+					hero_list = globals()['rubyStub'].getHero(hID)
 				except Exception as e:
 					print(e)
+					return
 							
 				if c.deadDefender == True :
 					print("O herói %s foi morto!" %(c.aHero.name))

@@ -65,7 +65,7 @@ class PythonApp(pythonInterfaceServicer):
 		qt = monsterQt.qt
 		monsters = Monsters()
 		for n in range(qt):
-			m = monsters_list[randrange(6)]
+			m = monsters_list[randrange(7)]
 			mons = monsters.monster.add()
 			mons.id = m.id
 			mons.name = m.name
