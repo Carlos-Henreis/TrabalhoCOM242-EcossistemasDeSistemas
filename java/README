@@ -1,22 +1,59 @@
-Instalação do GRPC:
+Módulo - Java RPG Helper
+========================
+Informações gerais para quem quer executar ou modificar o módulo do RPG Helper.
 
-Para baixar o jar vamos utilizar o MAVEN
+Feito utilizando Protocol Buffer (versão 3.2.0) e gRPC (versão 1.3.0).
 
-$sudo apt-get install maven
 
-Após intalar o maven adicione o caminho de sua JDK em:
+Para Executar
+-------------
+### Requerimentos
+- NetBeans 8.2 (recomendada, qualquer IDE de Java serve)
+- JDK 7 ou mais recente
 
-*/etc/environment
+### Passo a Passo
+1. Crie o projeto
+2. Adicione as bibliotecas JAR contidas na pasta **lib** ao projeto (Projeto->Properties->Libraries->Add Jar/Folder) 
+3. Adicione o Source Package **src** ao projeto
 
-Colocando a seguinte linha no fim do arquivo.
+Para Modificar
+--------------
+### Requerimentos
+- NetBeans 8.2 (recomendada, qualquer IDE de Java serve)
+- JDK 7 or higher
+- Protoc 3.2.0 ([Download Protoc](https://github.com/google/protobuf/releases/tag/v3.2.0))
+- Arquivos de biblioteca JAR ([protobuf-java-3.2.0.jar](https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.2.0/), todos [grpc 1.3.0](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.grpc%22%20AND%20v%3A%221.3.0%22), [netty-all e netty-handler-proxy](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.netty%22%20AND%20v%3A%224.1.8.Final%22)
 
-*JAVA_HOME="caminho do jdk"
+Todos os arquivos de biblioteca JAR estão disponíveis na pasta **lib**, baixá-las da fonte é opcional.
 
-Depois de salvar as alterações
+#### gRPC
+Junto aos arquivos de biblioteca você notará que baixou um `protoc-gen-grpc-java.exe`. Modifique-o para permitir execução. Ele será necessário no momento de gerar arquivos protoc com definições gRPC.
+```
+$chmod +x protoc-gen-grpc-java.exe
+```
+Caso tenha utilizado as JAR já disponíveis, este arquivo se encontra em rpgHelper/src/rpghelper
 
-*$source /etc/environment
+#### Protoc
+Para a instalação do Protoc 3.2.0 entre no diretório onde foi extraído e siga os comandos:
+```$./autogen.sh
+$./configure
+$make
+$make check
+$sudo make install
+$sudo ldconfig
+$protoc --version
+```
+##### Compilação comum
+Para realizar a compilação dos arquivos de tipo `.protoc`
+```
+protoc --java_out ./ nomeArquivo.proto
+```
 
-Para baixar o Jar configure um arquivo pom.xml na pasta do projeto
-com as especificações de versão e nome. 
+##### Compilação com gRPC
+
+Para realizar a compilação dos arquivos de tipo `.protoc` que contenham definições de serviços gRPC
+```
+protoc --plugin=protoc-gen-grpc-java=protoc-gen-grpc-java.exe --grpc-java_out ./ --java_out ./ nomeArquivo.proto
+```
 
 pom.xml
